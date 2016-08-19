@@ -1,5 +1,9 @@
 window.onload  = function() {
   var inputs = document.getElementsByTagName('input');
+  var button = document.getElementById('blurbutton');
+
+  var blurred = document.querySelectorAll('#top,#firstDiv,#secondDiv');
+  console.log(blurred);
 
   function handleText(text,id) {
     text = text.trim();
@@ -17,7 +21,7 @@ window.onload  = function() {
         middle.textContent = text;
         top.textContent = '____'
       } else {
-        for (var i = 0; i <= len + 1; i++) {
+        for (var i = 0; i <= len; i++) {
           top.textContent += '_';
         }
         for (var i = 0; i < len; i++) {
@@ -47,7 +51,20 @@ window.onload  = function() {
 
   }
 
-  inputs[0].addEventListener('keyup',getValue)
-  inputs[1].addEventListener('keyup',getValue)
+  function reblur() {
+  // using bind since a DOM collection is an array-like, not an array
+    Array.prototype.forEach.bind(blurred)(function(el) {
+      el.classList.remove('blurry');
+      window.setTimeout(function(){
+        el.classList.add('blurry');
+      },10);
+    });
+  }
+  function listenToMe() {
+    inputs[0].addEventListener('keyup',getValue)
+    inputs[1].addEventListener('keyup',getValue)
+    button.addEventListener('click',reblur)
+  }
 
+  listenToMe();
 }
