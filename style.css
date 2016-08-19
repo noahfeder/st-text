@@ -47,10 +47,10 @@ body {
   letter-spacing: -2px;
 }
 .dash:first-child {
-  margin-right: -15px;
+  margin-right: -22px;
 }
 .dash:last-child {
-  margin-left: -15px;
+  margin-left: -10px;
 }
 #secondDiv {
   margin-top: -50px;
@@ -78,6 +78,10 @@ body {
 .controls > * {
   margin: 5px;
   max-width: 150px;
+}
+
+.hide {
+  display: none;
 }
 
 @keyframes blur_resolve{

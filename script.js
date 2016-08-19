@@ -18,8 +18,13 @@ window.onload  = function() {
     var macrons = Math.floor(dashWidth/31);
     Array.prototype.forEach.bind(DOM.dashes)(function(el){
       el.innerHTML = '';
-      for (var i = 0; i < macrons; i++) {
-        el.innerHTML += '&macr;'
+      if (macrons < 1) {
+        el.classList.add('hide');
+      } else {
+        for (var i = 0; i < macrons; i++) {
+          el.innerHTML += '&macr;'
+        }
+        el.classList.remove('hide');
       }
     })
   }
