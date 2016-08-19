@@ -44,6 +44,7 @@ body {
 .dash {
   vertical-align: text-top;
   line-height: 1em;
+  letter-spacing: -2px;
 }
 
 #secondDiv {
@@ -53,6 +54,13 @@ body {
 #top {
   margin-bottom: -33px;
   letter-spacing: 2px;
+}
+
+#secondDiv.squeeze {
+  margin-top: -78px;
+}
+#secondDiv.squeeze .dash {
+  vertical-align: middle
 }
 
 .controls {

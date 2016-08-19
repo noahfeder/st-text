@@ -5,14 +5,24 @@ window.onload  = function() {
   var blurred = document.querySelectorAll('#top,#firstDiv,#secondDiv');
   console.log(blurred);
 
+  function squeeze(middle,between) {
+    if (middle.offsetWidth > between.offsetWidth) {
+      document.getElementById('secondDiv').classList.add('squeeze');
+    } else {
+      document.getElementById('secondDiv').classList.remove('squeeze');
+    }
+    //TODO MACRON ADJUSTMENTS
+  }
+
   function handleText(text,id) {
     text = text.trim();
+    var first = document.querySelector('.first');
+    var last = document.querySelector('.last');
+    var middle = document.querySelector('.middle')
+    var len = text.length;
+    var top = document.getElementById('top');
+    var between = document.querySelector('.between');
     if (id === 'first') {
-      var first = document.querySelector('.first');
-      var last = document.querySelector('.last');
-      var middle = document.querySelector('.middle')
-      var len = text.length;
-      var top = document.getElementById('top');
       top.textContent = '';
       var middleText = '';
       if (len < 2) {
@@ -35,11 +45,10 @@ window.onload  = function() {
         }
         middle.textContent = middleText;
       }
-
-
     } else {
       document.querySelector('.between').textContent = text;
     }
+    squeeze(middle,between);
   }
 
   function getValue(e) {
