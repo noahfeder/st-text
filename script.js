@@ -1,63 +1,82 @@
 window.onload  = function() {
   var inputs = document.getElementsByTagName('input');
   var button = document.getElementById('blurbutton');
-
   var blurred = document.querySelectorAll('#top,#firstDiv,#secondDiv');
-  console.log(blurred);
 
-  function squeeze(middle,between) {
-    if (middle.offsetWidth > between.offsetWidth) {
-      document.getElementById('secondDiv').classList.add('squeeze');
+  function squeeze(DOM) {
+    if (DOM.middle.offsetWidth > DOM.between.offsetWidth) {
+      DOM.secondDiv.classList.add('squeeze');
     } else {
-      document.getElementById('secondDiv').classList.remove('squeeze');
+      DOM.secondDiv.classList.remove('squeeze');
     }
-    //TODO MACRON ADJUSTMENTS
+  }
+
+  function macronize(DOM) {
+    var first = DOM.first.offsetWidth + DOM.middle.offsetWidth + DOM.last.offsetWidth;
+    var dashWidth = (first - DOM.between.offsetWidth) / 2;
+    console.log(dashWidth);
+    var macrons = Math.floor(dashWidth/31);
+    Array.prototype.forEach.bind(DOM.dashes)(function(el){
+      el.innerHTML = '';
+      for (var i = 0; i < macrons; i++) {
+        el.innerHTML += '&macr;'
+      }
+    })
+  }
+
+  function getDom(text) {
+    return {
+    'first' : document.querySelector('.first'),
+    'last' : document.querySelector('.last'),
+    'middle' : document.querySelector('.middle'),
+    'top' : document.getElementById('top'),
+    'between' : document.querySelector('.between'),
+    'firstDiv' : document.getElementById('firstDiv'),
+    'secondDiv' : document.getElementById('secondDiv'),
+    'dashes' : document.getElementsByClassName('dash')
+    };
   }
 
   function handleText(text,id) {
     text = text.trim();
-    var first = document.querySelector('.first');
-    var last = document.querySelector('.last');
-    var middle = document.querySelector('.middle')
-    var len = text.length;
-    var top = document.getElementById('top');
-    var between = document.querySelector('.between');
+    var len = text.length,
+        DOM = getDom();
     if (id === 'first') {
-      top.textContent = '';
+      DOM.top.textContent = '';
       var middleText = '';
-      if (len < 2) {
-        first.textContent = '';
-        last.textContent = '';
-        middle.textContent = text;
-        top.textContent = '____'
+      if (len < 3) {
+        DOM.first.textContent = '';
+        DOM.last.textContent = '';
+        DOM.middle.textContent = text;
+        DOM.top.textContent = '____'
       } else {
         for (var i = 0; i <= len; i++) {
-          top.textContent += '_';
+          DOM.top.textContent += '_';
         }
         for (var i = 0; i < len; i++) {
           if (i === 0) {
-            first.textContent = text[i]
+            DOM.first.textContent = text[i]
           } else if (i === len - 1) {
-            last.textContent = text[i]
+            DOM.last.textContent = text[i]
           } else {
             middleText += text[i]
           }
         }
-        middle.textContent = middleText;
+        DOM.middle.textContent = middleText;
       }
     } else {
-      document.querySelector('.between').textContent = text;
+      DOM.between.textContent = text;
     }
-    squeeze(middle,between);
+    squeeze(DOM);
+    macronize(DOM);
   }
 
   function getValue(e) {
     if (e.keyCode !== 9 && e.keyCode !== 16) {
-      var text = this.value;
-      var id = this.id;
+      var text = this.value,
+            id = this.id;
       handleText(text,id)
     }
-
   }
 
   function reblur() {
