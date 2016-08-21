@@ -9,21 +9,32 @@
   <script src="script.js"></script>
 </head>
 <body>
-  <div class="blurry" id="top">_________</div>
-  <div class="blurry" id="firstDiv">
+
+<svg class="svg-container blurry_animate">
+<filter id="blurMe" x="0" y="0">
+   <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+</filter>
+<rect class="svg-line top-line" style="" x="20%" y="10%" height="8" width="500"></rect>
+<rect class="svg-line left-line" style="" x="20%" y="50%" height="8" width="100"></rect>
+<rect class="svg-line right-line" style="" x="60%" y="50%" height="8" width="100"></rect>
+</svg>
+
+<div class = "words-container">
+  <div class="blurry blurry_animate" id="firstDiv">
       <span class="first">s</span>
       <span class="middle">trange</span>
       <span class="last">r</span>
   </div>
-  <div class="blurry" id="secondDiv">
-    <span class="dash">&macr;</span>
+
+  <div class="blurry blurry_animate" id="secondDiv">
       <span class="between">things</span>
-    <span class="dash">&macr;</span>
   </div>
   <div class="controls">
     <input id="first" type="text" placeholder="STRANGER">
     <input id="second" type="text" placeholder="THINGS">
     <button id="blurbutton">Re-Blur</button>
   </div>
+</div>
+
 </body>
 </html>
